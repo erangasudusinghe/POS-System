@@ -5,6 +5,8 @@
  */
 package pos;
 
+import com.mysql.jdbc.Statement;
+
 /**
  *
  * @author acer
@@ -16,6 +18,7 @@ public class Customer extends javax.swing.JPanel {
      */
     public Customer() {
         initComponents();
+        DBConnector.DBCon();
     }
 
     /**
@@ -27,22 +30,166 @@ public class Customer extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        CusNumber = new javax.swing.JTextField();
+        CustomerAdd = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        CusAddress = new javax.swing.JTextField();
+        CusName = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+
         setBackground(new java.awt.Color(204, 204, 0));
         setPreferredSize(new java.awt.Dimension(1660, 890));
+
+        CusNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CusNumberActionPerformed(evt);
+            }
+        });
+
+        CustomerAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pos/images/icons8_add_64px_3.png"))); // NOI18N
+        CustomerAdd.setText("ADD");
+        CustomerAdd.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        CustomerAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CustomerAddActionPerformed(evt);
+            }
+        });
+
+        jTable1.setBackground(new java.awt.Color(153, 153, 153));
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Customer Name", "Mobile Number", "Address"
+            }
+        ));
+        jTable1.setGridColor(new java.awt.Color(0, 204, 153));
+        jTable1.setSelectionBackground(new java.awt.Color(51, 51, 51));
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Mobile Number");
+
+        CusAddress.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CusAddressActionPerformed(evt);
+            }
+        });
+
+        CusName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CusNameActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Address");
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Customer Name");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1505, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(149, 149, 149)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CusName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(CusNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(55, 55, 55)
+                                        .addComponent(CusAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(CustomerAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(258, 258, 258)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(344, 344, 344))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 801, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(CusName, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(49, 49, 49)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(CusNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(39, 39, 39)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(CusAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(46, 46, 46)
+                        .addComponent(CustomerAdd))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(408, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void CusNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CusNumberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CusNumberActionPerformed
+
+    private void CusAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CusAddressActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CusAddressActionPerformed
+
+    private void CusNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CusNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CusNameActionPerformed
+
+    private void CustomerAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerAddActionPerformed
+        String name=CusName.getText();
+        String number=CusNumber.getText();
+        String address=CusAddress.getText();
+        try{
+            Statement s = (Statement) DBConnector.DBCon().createStatement();
+            s.executeUpdate("insert into customer (CusName,Mobile,Address)values('"+name+"','"+number+"','"+address+"')");
+            System.out.println("User Added");
+            
+        }
+        catch(Exception e)
+        {
+            System.out.print("Erro while data fetching"+e);
+        }
+    }//GEN-LAST:event_CustomerAddActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField CusAddress;
+    private javax.swing.JTextField CusName;
+    private javax.swing.JTextField CusNumber;
+    private javax.swing.JButton CustomerAdd;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
