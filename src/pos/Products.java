@@ -183,6 +183,11 @@ public class Products extends javax.swing.JPanel {
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pos/images/icons8_remove_64px.png"))); // NOI18N
         jButton2.setText("DELETE");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -230,9 +235,7 @@ public class Products extends javax.swing.JPanel {
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(SupplierID, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addComponent(Quntity, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(ProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(ProductName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addComponent(jLabel3)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addGroup(layout.createSequentialGroup()
@@ -299,7 +302,7 @@ public class Products extends javax.swing.JPanel {
                             .addComponent(ProductAdd)
                             .addComponent(jButton1)
                             .addComponent(jButton2))))
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -325,13 +328,15 @@ public class Products extends javax.swing.JPanel {
 
     private void ProductAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProductAddActionPerformed
         String name=ProductName.getText();
+        String productID=ProductID.getText();
         String supplierID=SupplierID.getText();
         String quntity=Quntity.getText();
         double price=Double.parseDouble(Price.getText());
         String barcode=BarCode.getText();
         try{
             Statement s = (Statement) DBConnector.DBCon().createStatement();
-            s.executeUpdate("insert into products (ProductName,SupplierID,Quntity,Price,BarCode)values('"+name+"','"+supplierID+"','"+quntity+"','"+price+"','"+barcode+"')");
+            s.executeUpdate("insert into products (ProductName,ProductsID,SupplierID,Quntity,Price,BarCode)values('"+name+"','"+productID+"','"+supplierID+"','"+quntity+"','"+price+"','"+barcode+"')");
+            tableload();
             System.out.println("Product Added");
             
         }
@@ -395,6 +400,17 @@ public class Products extends javax.swing.JPanel {
     private void ProductIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProductIDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ProductIDActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try{
+            Statement statement=(Statement) DBConnector.DBCon().createStatement();
+            statement.executeUpdate("delete from products where ProductsID='"+ProductID.getText().trim()+"'");
+            tableload();
+        }
+        catch(Exception e){
+            System.out.print("Erro while data fetching"+e);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

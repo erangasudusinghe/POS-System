@@ -329,7 +329,14 @@ public class Employee extends javax.swing.JPanel {
     }//GEN-LAST:event_EmployeeAddActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       
+        try{
+            Statement statement=(Statement) DBConnector.DBCon().createStatement();
+            statement.executeUpdate("delete from Employee where NIC='"+NIC.getText().trim()+"'");
+            tableload();
+        }
+        catch(Exception e){
+            System.out.print("Erro while data fetching"+e);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
