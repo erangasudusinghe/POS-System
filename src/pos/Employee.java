@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -63,6 +64,33 @@ public class Employee extends javax.swing.JPanel {
         
         
     }
+    public void SearchTable(){
+        if(EmpSearch.getText().trim().isEmpty()) {
+            tableload();
+        }
+        else{ try{
+                Statement State=(Statement) DBConnector.DBCon().createStatement();
+                ResultSet result=State.executeQuery("select * from employee where EmployeeName='"+EmpSearch.getText()+"'");
+                DefaultTableModel table =(DefaultTableModel) EmpTable.getModel();
+                table.setRowCount(0);
+                  while(result.next())
+                 {
+                   
+                    Vector v = new Vector();
+                    v.add(result.getString("EmployeeName"));
+                    v.add(result.getString("NIC"));
+                    v.add(result.getString("Salary"));
+                    v.add(result.getString("Job"));
+                    v.add(result.getString("Contact"));
+                    table.addRow(v);
+                 }
+            }
+            catch(Exception e){
+                System.out.print("Erro while data fetching "+e);
+            }
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -87,7 +115,7 @@ public class Employee extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        EmpSearch = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
 
@@ -193,8 +221,19 @@ public class Employee extends javax.swing.JPanel {
             }
         });
 
+        EmpSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                EmpSearchKeyReleased(evt);
+            }
+        });
+
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton3.setText("Find");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -242,7 +281,7 @@ public class Employee extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addGap(41, 41, 41)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(EmpSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(171, 171, 171))
@@ -282,7 +321,7 @@ public class Employee extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(EmpSearch, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(113, Short.MAX_VALUE))
@@ -318,6 +357,7 @@ public class Employee extends javax.swing.JPanel {
         try{
             Statement s = (Statement) DBConnector.DBCon().createStatement();
             s.executeUpdate("insert into employee (EmployeeName,NIC,Salary,Job,Contact)values('"+name+"','"+nic+"','"+salary+"','"+job+"','"+contact+"')");
+             JOptionPane.showMessageDialog(null, "Employee Added");
             System.out.println("Employee Added");
             tableload();
             
@@ -326,6 +366,11 @@ public class Employee extends javax.swing.JPanel {
         {
             System.out.print("Erro while data fetching"+e);
         }
+        EmployeeName.setText(null);
+        NIC.setText(null);
+        JOB.setText(null);
+        Sal.setText(null);
+        Contact.setText(null);
     }//GEN-LAST:event_EmployeeAddActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -333,10 +378,16 @@ public class Employee extends javax.swing.JPanel {
             Statement statement=(Statement) DBConnector.DBCon().createStatement();
             statement.executeUpdate("delete from Employee where NIC='"+NIC.getText().trim()+"'");
             tableload();
+            JOptionPane.showMessageDialog(null, "Delete Success");
         }
         catch(Exception e){
             System.out.print("Erro while data fetching"+e);
         }
+        EmployeeName.setText(null);
+        NIC.setText(null);
+        JOB.setText(null);
+        Sal.setText(null);
+        Contact.setText(null);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -379,17 +430,32 @@ public class Employee extends javax.swing.JPanel {
             Statement s = (Statement) DBConnector.DBCon().createStatement();
             s.executeUpdate("update employee set EmployeeName ='"+name+"',Job ='"+job+"',Salary='"+salary+"',Contact='"+contact+"' where NIC='"+nic+"' ");
             tableload();
+            JOptionPane.showMessageDialog(null, "Update Success");
             System.out.println("Employee updated");
         }
         catch(Exception e)
         {
             System.out.print("Erro while data fetching"+e);
         }
+        EmployeeName.setText(null);
+        NIC.setText(null);
+        JOB.setText(null);
+        Sal.setText(null);
+        Contact.setText(null);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void EmpSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EmpSearchKeyReleased
+        SearchTable();
+    }//GEN-LAST:event_EmpSearchKeyReleased
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        SearchTable();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Contact;
+    private javax.swing.JTextField EmpSearch;
     private javax.swing.JTable EmpTable;
     private javax.swing.JButton EmployeeAdd;
     private javax.swing.JTextField EmployeeName;
@@ -406,6 +472,5 @@ public class Employee extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

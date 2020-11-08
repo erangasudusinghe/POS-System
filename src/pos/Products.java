@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -61,6 +62,34 @@ public class Products extends javax.swing.JPanel {
         
         
     }
+    
+     public void SearchTable(){
+        if(SearchProduct.getText().trim().isEmpty()) {
+            tableload();
+        }
+        else{ try{
+                Statement State=(Statement) DBConnector.DBCon().createStatement();
+                ResultSet result=State.executeQuery("select * from products where ProductName='"+SearchProduct.getText()+"'");
+                DefaultTableModel table =(DefaultTableModel) ProTable.getModel();
+                table.setRowCount(0);
+                  while(result.next())
+                 {
+                   
+                    Vector v = new Vector();
+                    v.add(result.getString("ProductsID"));
+                    v.add(result.getString("ProductName"));
+                    v.add(result.getString("SupplierID"));
+                    v.add(result.getString("Quntity"));
+                    v.add(result.getString("Price"));
+                    table.addRow(v);
+                 }
+            }
+            catch(Exception e){
+                System.out.print("Erro while data fetching "+e);
+            }
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,7 +115,7 @@ public class Products extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        SearchProduct = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         ProductID = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -193,8 +222,19 @@ public class Products extends javax.swing.JPanel {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Search Employee");
 
+        SearchProduct.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                SearchProductKeyReleased(evt);
+            }
+        });
+
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton3.setText("Find");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         ProductID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,7 +254,7 @@ public class Products extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addGap(41, 41, 41)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(SearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(215, 215, 215))
@@ -269,7 +309,7 @@ public class Products extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(SearchProduct, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -337,6 +377,7 @@ public class Products extends javax.swing.JPanel {
             Statement s = (Statement) DBConnector.DBCon().createStatement();
             s.executeUpdate("insert into products (ProductName,ProductsID,SupplierID,Quntity,Price,BarCode)values('"+name+"','"+productID+"','"+supplierID+"','"+quntity+"','"+price+"','"+barcode+"')");
             tableload();
+            JOptionPane.showMessageDialog(null, "Product Added");
             System.out.println("Product Added");
             
         }
@@ -344,6 +385,12 @@ public class Products extends javax.swing.JPanel {
         {
             System.out.print("Erro while data fetching"+e);
         }
+        ProductName.setText(null);
+        ProductID.setText(null);
+        SupplierID.setText(null);
+        Quntity.setText(null);
+        Price.setText(null);
+        BarCode.setText(null);
     }//GEN-LAST:event_ProductAddActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -389,12 +436,19 @@ public class Products extends javax.swing.JPanel {
             Statement s = (Statement) DBConnector.DBCon().createStatement();
             s.executeUpdate("update products set ProductName ='"+name+"',SupplierID ='"+supplierID+"',Quntity='"+quntity+"',Price='"+price+"',BarCode='"+barcode+"' where ProductsID='"+productID+"' ");
             tableload();
+            JOptionPane.showMessageDialog(null, "Update Success");
             System.out.println("Employee updated");
         }
         catch(Exception e)
         {
             System.out.print("Erro while data fetching"+e);
         }
+        ProductName.setText(null);
+        ProductID.setText(null);
+        SupplierID.setText(null);
+        Quntity.setText(null);
+        Price.setText(null);
+        BarCode.setText(null);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ProductIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProductIDActionPerformed
@@ -406,11 +460,26 @@ public class Products extends javax.swing.JPanel {
             Statement statement=(Statement) DBConnector.DBCon().createStatement();
             statement.executeUpdate("delete from products where ProductsID='"+ProductID.getText().trim()+"'");
             tableload();
+            JOptionPane.showMessageDialog(null, "Delete Success");
         }
         catch(Exception e){
             System.out.print("Erro while data fetching"+e);
         }
+        ProductName.setText(null);
+        ProductID.setText(null);
+        SupplierID.setText(null);
+        Quntity.setText(null);
+        Price.setText(null);
+        BarCode.setText(null);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void SearchProductKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SearchProductKeyReleased
+        SearchTable();
+    }//GEN-LAST:event_SearchProductKeyReleased
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        SearchTable();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -421,6 +490,7 @@ public class Products extends javax.swing.JPanel {
     private javax.swing.JTextField ProductID;
     private javax.swing.JTextField ProductName;
     private javax.swing.JTextField Quntity;
+    private javax.swing.JTextField SearchProduct;
     private javax.swing.JTextField SupplierID;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -433,6 +503,5 @@ public class Products extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

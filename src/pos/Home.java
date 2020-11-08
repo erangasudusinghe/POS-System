@@ -41,7 +41,6 @@ public class Home extends javax.swing.JFrame {
         mainPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setAlwaysOnTop(true);
         setBackground(new java.awt.Color(102, 102, 102));
         setMinimumSize(new java.awt.Dimension(1920, 1080));
         setPreferredSize(new java.awt.Dimension(1920, 1080));
@@ -120,8 +119,8 @@ public class Home extends javax.swing.JFrame {
 
         jButton11.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pos/images/icons8_invoice_64px.png"))); // NOI18N
-        jButton11.setText("Invoice");
-        jButton11.setToolTipText("Invoice Detailes");
+        jButton11.setText("Sale");
+        jButton11.setToolTipText("selling section");
         jButton11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton11.setIconTextGap(6);
         jButton11.setInheritsPopupMenu(true);
@@ -242,7 +241,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        Invoice InvoicePage = new Invoice();
+        Sale InvoicePage = new Sale();
         panelloader.jPanelLoader(mainPanel, InvoicePage);
     }//GEN-LAST:event_jButton11ActionPerformed
 

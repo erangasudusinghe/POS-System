@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -308,12 +309,18 @@ public class Supplier extends javax.swing.JPanel {
             Statement s = (Statement) DBConnector.DBCon().createStatement();
             s.executeUpdate("insert into supplier (ProductName,SupplierID,Quntity,SupplierName,ProductsID)values('"+productname+"','"+supplierID+"','"+quntity+"','"+suppliername+"','"+productID+"')");
             System.out.println("Product Added");
-            
+            tableload();
+            JOptionPane.showMessageDialog(null, "Supplier Added");
         }
         catch(Exception e)
         {
             System.out.print("Erro while data fetching"+e);
         }
+        ProductName.setText(null);
+        SupplierName.setText(null);
+        SupplierID.setText(null);
+        Quntity.setText(null);
+        ProductID.setText(null);
     }//GEN-LAST:event_AddSupplierActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -355,12 +362,18 @@ public class Supplier extends javax.swing.JPanel {
             Statement s = (Statement) DBConnector.DBCon().createStatement();
             s.executeUpdate("update supplier set ProductName ='"+productname+"',SupplierName ='"+suppliername+"',ProductsID='"+productID+"',Quntity='"+quntity+"' where SupplierID='"+supplierID+"' ");
             tableload();
+            JOptionPane.showMessageDialog(null, "Update Success");
             System.out.println("Employee updated");
         }
         catch(Exception e)
         {
             System.out.print("Erro while data fetching"+e);
         }
+        ProductName.setText(null);
+        SupplierName.setText(null);
+        SupplierID.setText(null);
+        Quntity.setText(null);
+        ProductID.setText(null);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -368,10 +381,16 @@ public class Supplier extends javax.swing.JPanel {
             Statement statement=(Statement) DBConnector.DBCon().createStatement();
             statement.executeUpdate("delete from supplier where SupplierID='"+SupplierID.getText().trim()+"'");
             tableload();
+            JOptionPane.showMessageDialog(null, "Delete Success");
         }
         catch(Exception e){
             System.out.print("Erro while data fetching"+e);
         }
+        ProductName.setText(null);
+        SupplierName.setText(null);
+        SupplierID.setText(null);
+        Quntity.setText(null);
+        ProductID.setText(null);
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

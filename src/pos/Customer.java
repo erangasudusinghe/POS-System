@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -60,6 +61,30 @@ public class Customer extends javax.swing.JPanel {
         
         
     }
+    public void SearchTable(){
+        if(CusSearch.getText().trim().isEmpty()) {
+            tableload();
+        }
+        else{ try{
+                Statement State=(Statement) DBConnector.DBCon().createStatement();
+                ResultSet result=State.executeQuery("select * from customer where CusName='"+CusSearch.getText()+"'");
+                DefaultTableModel table =(DefaultTableModel) CusTable.getModel();
+                table.setRowCount(0);
+                  while(result.next())
+                 {
+                     Vector v = new Vector();
+                     v.add(result.getString("CusName"));
+                     v.add(result.getString("Mobile"));
+                     v.add(result.getString("Address"));
+                     table.addRow(v);
+                 }
+            }
+            catch(Exception e){
+                System.out.print("Erro while data fetching "+e);
+            }
+        }
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,7 +107,7 @@ public class Customer extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        CusSearch = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
@@ -165,10 +190,29 @@ public class Customer extends javax.swing.JPanel {
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Search Employee");
+        jLabel6.setText("Search Customer");
+
+        CusSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CusSearchActionPerformed(evt);
+            }
+        });
+        CusSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                CusSearchKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                CusSearchKeyReleased(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton3.setText("Find");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -200,7 +244,7 @@ public class Customer extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(41, 41, 41)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(CusSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(160, 160, 160)))
@@ -213,7 +257,7 @@ public class Customer extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CusSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -258,6 +302,7 @@ public class Customer extends javax.swing.JPanel {
         try{
             Statement s = (Statement) DBConnector.DBCon().createStatement();
             s.executeUpdate("insert into customer (CusName,Mobile,Address)values('"+name+"','"+number+"','"+address+"')");
+             JOptionPane.showMessageDialog(null, "Customer Added");
             System.out.println("User Added");
             
         }
@@ -266,6 +311,9 @@ public class Customer extends javax.swing.JPanel {
             System.out.print("Erro while data fetching"+e);
         }
         tableload();
+        CusName.setText(null);
+        CusNumber.setText(null);
+        CusAddress.setText(null);
     }//GEN-LAST:event_CustomerAddActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -296,30 +344,55 @@ public class Customer extends javax.swing.JPanel {
             Statement s = (Statement) DBConnector.DBCon().createStatement();
             s.executeUpdate("update customer set CusName ='"+name+"',Address ='"+Address+"' where Mobile='"+mobile+"' ");
             tableload();
+            JOptionPane.showMessageDialog(null, "Update Success");
             System.out.println("Employee updated");
         }
         catch(Exception e)
         {
             System.out.print("Erro while data fetching"+e);
         }
+        CusName.setText(null);
+        CusNumber.setText(null);
+        CusAddress.setText(null);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try{
             Statement statement=(Statement) DBConnector.DBCon().createStatement();
             statement.executeUpdate("delete from customer where Mobile='"+CusNumber.getText().trim()+"'");
+            JOptionPane.showMessageDialog(null, "Delete Success");
             tableload();
         }
         catch(Exception e){
             System.out.print("Erro while data fetching"+e);
         }
+        CusName.setText(null);
+        CusNumber.setText(null);
+        CusAddress.setText(null);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void CusSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CusSearchKeyPressed
+          
+    }//GEN-LAST:event_CusSearchKeyPressed
+
+    private void CusSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CusSearchKeyReleased
+      SearchTable();
+    }//GEN-LAST:event_CusSearchKeyReleased
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+      SearchTable();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void CusSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CusSearchActionPerformed
+        
+    }//GEN-LAST:event_CusSearchActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CusAddress;
     private javax.swing.JTextField CusName;
     private javax.swing.JTextField CusNumber;
+    private javax.swing.JTextField CusSearch;
     private javax.swing.JTable CusTable;
     private javax.swing.JButton CustomerAdd;
     private javax.swing.JButton jButton1;
@@ -330,6 +403,5 @@ public class Customer extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
