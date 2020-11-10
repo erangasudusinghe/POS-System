@@ -35,14 +35,14 @@ public class Sale extends javax.swing.JPanel {
         initComponents();
         dataload();
         Color white = new Color(255,255,255);
-        InvoiceTable.setBackground(white);
-        InvoiceTable.setGridColor(white);
-        InvoiceTable.getTableHeader().setFont(new Font("Segoe UI",Font.BOLD,20));
-        InvoiceTable.getTableHeader().setOpaque(false);
-        InvoiceTable.getTableHeader().setReorderingAllowed(false);
-        InvoiceTable.getTableHeader().setBackground(white);
-        InvoiceTable.getTableHeader().setForeground(new Color(0,0,0));
-        InvoiceTable.setRowHeight(40);
+        CartTable.setBackground(white);
+        CartTable.setGridColor(white);
+        CartTable.getTableHeader().setFont(new Font("Segoe UI",Font.BOLD,20));
+        CartTable.getTableHeader().setOpaque(false);
+        CartTable.getTableHeader().setReorderingAllowed(false);
+        CartTable.getTableHeader().setBackground(white);
+        CartTable.getTableHeader().setForeground(new Color(0,0,0));
+        CartTable.setRowHeight(40);
         InvoiceIDload();
         Discount.setText("0.0");
         
@@ -83,7 +83,7 @@ public class Sale extends javax.swing.JPanel {
     }
     public void RemoveAll(){
         try{
-            DefaultTableModel table =(DefaultTableModel) InvoiceTable.getModel();
+            DefaultTableModel table =(DefaultTableModel) CartTable.getModel();
             table.setRowCount(0);
             Netcount();
             PaidAmount.setText(null);
@@ -116,18 +116,18 @@ public class Sale extends javax.swing.JPanel {
             return Total;
     }
     public void Netcount(){
-        int countOfrow= InvoiceTable.getRowCount();
+        int countOfrow= CartTable.getRowCount();
         double total = 0;
         for(int i=0;i<countOfrow;i++){
-            double value= Double.valueOf(InvoiceTable.getValueAt(i, 5).toString());
+            double value= Double.valueOf(CartTable.getValueAt(i, 5).toString());
             total+=value;
         } 
         totalAmount.setText(Double.toString(total));
         
-        int numberOfrow= InvoiceTable.getRowCount();
+        int numberOfrow= CartTable.getRowCount();
         double totalQ = 0;
         for(int i=0;i<numberOfrow;i++){
-            double value= Double.valueOf(InvoiceTable.getValueAt(i, 3).toString());
+            double value= Double.valueOf(CartTable.getValueAt(i, 3).toString());
             totalQ+=value;
         } 
         totalQuntity =Double.toString(totalQ);
@@ -184,7 +184,7 @@ public class Sale extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        InvoiceTable = new javax.swing.JTable();
+        CartTable = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         AddCart = new javax.swing.JButton();
         Remove = new javax.swing.JButton();
@@ -347,9 +347,9 @@ public class Sale extends javax.swing.JPanel {
                 .addGap(51, 51, 51))
         );
 
-        InvoiceTable.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        InvoiceTable.setForeground(new java.awt.Color(0, 153, 153));
-        InvoiceTable.setModel(new javax.swing.table.DefaultTableModel(
+        CartTable.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        CartTable.setForeground(new java.awt.Color(0, 153, 153));
+        CartTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -357,13 +357,13 @@ public class Sale extends javax.swing.JPanel {
                 "Invoice ID", "Name", "BarCode", "Quntity", "Unit Price", "Total"
             }
         ));
-        InvoiceTable.setFocusable(false);
-        InvoiceTable.setGridColor(new java.awt.Color(255, 255, 255));
-        InvoiceTable.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        InvoiceTable.setRowHeight(25);
-        InvoiceTable.setShowVerticalLines(false);
-        InvoiceTable.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(InvoiceTable);
+        CartTable.setFocusable(false);
+        CartTable.setGridColor(new java.awt.Color(255, 255, 255));
+        CartTable.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        CartTable.setRowHeight(25);
+        CartTable.setShowVerticalLines(false);
+        CartTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(CartTable);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -574,7 +574,7 @@ public class Sale extends javax.swing.JPanel {
     private void AddCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddCartActionPerformed
       if(!Quntity.getText().isEmpty()&&!(CusList.getSelectedItem().toString()).equals("Select")&&!(ProList.getSelectedItem().toString()).equals("Select")){
             if(isNumeric(Quntity.getText())){
-                DefaultTableModel table =(DefaultTableModel) InvoiceTable.getModel();
+                DefaultTableModel table =(DefaultTableModel) CartTable.getModel();
                 Vector v1 =new Vector();
                 v1.add(InvoiceID.getText());
                 v1.add(CusList.getSelectedItem());
@@ -651,8 +651,8 @@ public class Sale extends javax.swing.JPanel {
 
     private void RemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveActionPerformed
         try{
-            DefaultTableModel table =(DefaultTableModel) InvoiceTable.getModel();
-            int row= InvoiceTable.getSelectedRow();
+            DefaultTableModel table =(DefaultTableModel) CartTable.getModel();
+            int row= CartTable.getSelectedRow();
             //String ID= table.getValueAt(row, 0).toString();
             table.removeRow(row);
             Netcount();
@@ -680,7 +680,7 @@ public class Sale extends javax.swing.JPanel {
         if(!PaidAmount.getText().isEmpty()&&isNumeric(PaidAmount.getText())&&!totalAmount.getText().isEmpty()){
         try {
             Statement statement = (Statement)DBConnector.DBCon().createStatement();
-            DefaultTableModel table =(DefaultTableModel) InvoiceTable.getModel();
+            DefaultTableModel table =(DefaultTableModel) CartTable.getModel();
             int rows=table.getRowCount();
             for(int i=0;i<rows;i++){
                 String invoiceID=table.getValueAt(i, 0).toString();
@@ -712,10 +712,10 @@ public class Sale extends javax.swing.JPanel {
                Status="Paid";
            }
            else if(val>0.0){
-               Status="Paid";
+               Status="Paid With Discount";
            }
            else{
-               Status="Unpaid Paid";
+               Status="Unpaid";
            }
            Statement s1= (Statement) DBConnector.DBCon().createStatement();
            s1.executeUpdate("insert into sales (InvoiceID,CusID,CustomerName,TotalQuntity,TotalPrice,Status,Balance) values('"+InvoiceID.getText()+"','"+CusID+"','"+CusName+"','"+totalQuntity+"','"+totalAmount.getText()+"','"+Status+"','"+Balance.getText()+"')");
@@ -749,10 +749,10 @@ public class Sale extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddCart;
     private javax.swing.JTextField Balance;
+    private javax.swing.JTable CartTable;
     private javax.swing.JComboBox<String> CusList;
     private javax.swing.JTextField Discount;
     private javax.swing.JLabel InvoiceID;
-    private javax.swing.JTable InvoiceTable;
     private javax.swing.JTextField PaidAmount;
     private javax.swing.JLabel Price;
     private javax.swing.JComboBox<String> ProList;
