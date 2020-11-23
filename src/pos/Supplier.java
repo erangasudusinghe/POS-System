@@ -53,6 +53,7 @@ public class Supplier extends javax.swing.JPanel {
                  v.add(results.getString("SupplierID"));
                  v.add(results.getString("ProductName"));
                  v.add(results.getString("Quntity"));
+                 v.add(results.getString("UnitPrice"));
                  table.addRow(v);
              }
             
@@ -90,6 +91,8 @@ public class Supplier extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        UnitPrice = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setPreferredSize(new java.awt.Dimension(1660, 890));
@@ -124,13 +127,13 @@ public class Supplier extends javax.swing.JPanel {
         Suptable.setForeground(new java.awt.Color(0, 153, 153));
         Suptable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Supplier Name", "Supplier ID", "Product", "Quntity"
+                "Supplier Name", "Supplier ID", "Product", "Quntity", "Unit Price"
             }
         ));
         Suptable.setGridColor(new java.awt.Color(0, 204, 153));
@@ -197,14 +200,24 @@ public class Supplier extends javax.swing.JPanel {
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton3.setText("Find");
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Price");
+
+        UnitPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UnitPriceActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(78, 78, 78)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel5)
@@ -219,12 +232,16 @@ public class Supplier extends javax.swing.JPanel {
                                 .addComponent(ProductID, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(SupplierID, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton2)
                         .addGap(18, 18, 18)
                         .addComponent(AddSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1)))
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(UnitPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 980, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -247,6 +264,7 @@ public class Supplier extends javax.swing.JPanel {
                     .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(SupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -267,13 +285,16 @@ public class Supplier extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Quntity, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
-                        .addGap(71, 71, 71)
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(UnitPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(AddSupplier)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(289, Short.MAX_VALUE))
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2))))
+                .addContainerGap(278, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -303,9 +324,11 @@ public class Supplier extends javax.swing.JPanel {
         String supplierID=SupplierID.getText();
         String quntity=Quntity.getText();
         String productID=ProductID.getText();
+        double unitPrice=Double.valueOf(UnitPrice.getText());
+        double total=unitPrice*Double.valueOf(quntity);
         try{
             Statement s = (Statement) DBConnector.DBCon().createStatement();
-            s.executeUpdate("insert into supplier (ProductName,SupplierID,Quntity,SupplierName,ProductsID)values('"+productname+"','"+supplierID+"','"+quntity+"','"+suppliername+"','"+productID+"')");
+            s.executeUpdate("insert into supplier (ProductName,SupplierID,Quntity,SupplierName,ProductsID,UnitPrice,TotalPrice)values('"+productname+"','"+supplierID+"','"+quntity+"','"+suppliername+"','"+productID+"','"+unitPrice+"','"+total+"')");
             System.out.println("Product Added");
             tableload();
             JOptionPane.showMessageDialog(null, "Supplier Added");
@@ -355,6 +378,9 @@ public class Supplier extends javax.swing.JPanel {
         if(!Quntity.getText().isEmpty()){
             quntity=Quntity.getText();
         }
+        if(!UnitPrice.getText().isEmpty()){
+            quntity=Quntity.getText();
+        }
        
         try{
             Statement s = (Statement) DBConnector.DBCon().createStatement();
@@ -391,6 +417,10 @@ public class Supplier extends javax.swing.JPanel {
         ProductID.setText(null);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void UnitPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UnitPriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UnitPriceActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddSupplier;
@@ -400,6 +430,7 @@ public class Supplier extends javax.swing.JPanel {
     private javax.swing.JTextField SupplierID;
     private javax.swing.JTextField SupplierName;
     private javax.swing.JTable Suptable;
+    private javax.swing.JTextField UnitPrice;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -409,6 +440,7 @@ public class Supplier extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables

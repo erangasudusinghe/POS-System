@@ -29,7 +29,7 @@ public class Report extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        reporView = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(0, 153, 153));
@@ -40,9 +40,14 @@ public class Report extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Invoice ID");
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton1.setText("View Report");
+        reporView.setBackground(new java.awt.Color(255, 255, 255));
+        reporView.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        reporView.setText("View Report");
+        reporView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reporViewActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -54,7 +59,7 @@ public class Report extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 800, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(reporView)
                 .addGap(64, 64, 64))
         );
         jPanel1Layout.setVerticalGroup(
@@ -63,7 +68,7 @@ public class Report extends javax.swing.JPanel {
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(reporView, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
@@ -86,11 +91,21 @@ public class Report extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void reporViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporViewActionPerformed
+        try{ 
+            ReportView r = new ReportView("src\\pos\\Reports\\report1.jasper");
+            r.setVisible(true);
+        }
+        catch(Exception e){
+        
+        }
+    }//GEN-LAST:event_reporViewActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton reporView;
     // End of variables declaration//GEN-END:variables
 }
