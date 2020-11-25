@@ -90,6 +90,35 @@ public class Products extends javax.swing.JPanel {
         }
         
     }
+    
+    public static String ProductDetails=null;
+    public static String QrFileName=null;
+    public void QrData(){
+        try {
+            
+            int selectedRow=ProTable.getSelectedRow();
+            ProductDetails="'"+ProTable.getValueAt(selectedRow, 0)+"'\n'"+ProTable.getValueAt(selectedRow, 1)+"'\n'"+ProTable.getValueAt(selectedRow, 2)+"'\n'"+ProTable.getValueAt(selectedRow, 3)+"'\n'"+ProTable.getValueAt(selectedRow, 4)+"'";
+            QrFileName=ProTable.getValueAt(selectedRow, 0).toString();     
+            
+        } catch (Exception ex) {
+            Logger.getLogger(QrGen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    public static String BarProductDetails=null;
+    public static String BarFileName=null;
+     public void BarData(){
+        try {
+            
+            int selectedRow=ProTable.getSelectedRow();
+            BarProductDetails=""+ProTable.getValueAt(selectedRow, 1)+" "+"Rs."+ProTable.getValueAt(selectedRow, 4)+"";
+            BarFileName=ProTable.getValueAt(selectedRow, 0).toString();     
+            
+        } catch (Exception ex) {
+            Logger.getLogger(QrGen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -198,6 +227,11 @@ public class Products extends javax.swing.JPanel {
         ));
         ProTable.setGridColor(new java.awt.Color(0, 204, 153));
         ProTable.setSelectionBackground(new java.awt.Color(51, 51, 51));
+        ProTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ProTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(ProTable);
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -344,7 +378,7 @@ public class Products extends javax.swing.JPanel {
                             .addComponent(ProductAdd)
                             .addComponent(jButton1)
                             .addComponent(jButton2))))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -482,6 +516,11 @@ public class Products extends javax.swing.JPanel {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         SearchTable();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void ProTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProTableMouseClicked
+        QrData();
+        BarData();
+    }//GEN-LAST:event_ProTableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
