@@ -5,12 +5,19 @@
  */
 package pos;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
 
@@ -19,7 +26,10 @@ import javax.swing.Timer;
  * @author acer
  */
 public class Home extends javax.swing.JFrame {
-
+    static String name;
+    public static void SetuName(String Uname){
+        Home.name=Uname;
+    }
     /**
      * Creates new form Home
      */
@@ -38,7 +48,18 @@ public class Home extends javax.swing.JFrame {
             Clock.setText(Formatted);
         });
         timer.start();
+        Sale InvoicePage = new Sale();
+        panelloader.jPanelLoader(mainPanel, InvoicePage);
+        userName.setText(name+""); 
     }
+    
+   /* public final void imageresize(){
+    ImageIcon image = new ImageIcon("C:\\Users\\acer\\Documents\\NetBeansProjects\\POS\\src\\pos\\images\\final1.jpg");
+    Image img=image.getImage();
+    Image scaleImage= img.getScaledInstance(welcomeBanner.getWidth(), welcomeBanner.getHeight(), Image.SCALE_SMOOTH);
+    ImageIcon scaledimage = new ImageIcon(scaleImage);
+    welcomeBanner.setIcon(scaledimage);
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,7 +76,7 @@ public class Home extends javax.swing.JFrame {
         barAndQr = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        userName = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
@@ -69,6 +90,7 @@ public class Home extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -138,10 +160,11 @@ public class Home extends javax.swing.JFrame {
                 .addGap(80, 80, 80))
         );
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("User");
-        jLabel3.setToolTipText("");
+        userName.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        userName.setForeground(new java.awt.Color(255, 255, 255));
+        userName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        userName.setText("User");
+        userName.setToolTipText("");
 
         javax.swing.GroupLayout homeUpperPanelLayout = new javax.swing.GroupLayout(homeUpperPanel);
         homeUpperPanel.setLayout(homeUpperPanelLayout);
@@ -153,8 +176,8 @@ public class Home extends javax.swing.JFrame {
                         .addGap(36, 36, 36)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(homeUpperPanelLayout.createSequentialGroup()
-                        .addGap(72, 72, 72)
-                        .addComponent(jLabel3)))
+                        .addGap(56, 56, 56)
+                        .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(65, 65, 65)
                 .addComponent(barAndQr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 647, Short.MAX_VALUE)
@@ -176,7 +199,7 @@ public class Home extends javax.swing.JFrame {
                                 .addGap(8, 8, 8)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3)
+                                .addComponent(userName)
                                 .addGap(0, 3, Short.MAX_VALUE))
                             .addComponent(barAndQr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
@@ -357,6 +380,14 @@ public class Home extends javax.swing.JFrame {
         jMenuItem1.setText("Exit\n");
         jMenu1.add(jMenuItem1);
 
+        jMenuItem2.setText("LogOut");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -409,40 +440,21 @@ public class Home extends javax.swing.JFrame {
         panelloader.jPanelLoader(mainPanel, invoice);
     }//GEN-LAST:event_jButton14ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+         
+        try {
+            Statement st = DBConnector.DBCon().createStatement();
+            st.executeUpdate("UPDATE users SET state="+0+" WHERE Name='"+name+"'");
+        } catch (SQLException ex) {
+            System.out.println(""+ex);
+        }
+           
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Home().setVisible(true);
-            }
-        });
-    }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Clock;
@@ -457,14 +469,15 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JLabel userName;
     // End of variables declaration//GEN-END:variables
 }

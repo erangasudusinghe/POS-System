@@ -94,6 +94,7 @@ public class Report extends javax.swing.JPanel {
     private void reporViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporViewActionPerformed
         try{ 
             ReportView r = new ReportView("src\\pos\\Reports\\report1.jasper");
+            
             r.setVisible(true);
         }
         catch(Exception e){

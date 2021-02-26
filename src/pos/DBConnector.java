@@ -3,6 +3,7 @@ package pos;
 
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
+import javax.swing.JOptionPane;
 
 
 public class DBConnector {
@@ -17,6 +18,7 @@ public class DBConnector {
         }
         catch(Exception e)
         {
+            JOptionPane.showMessageDialog(null, "Please Run the database Sever");
             System.out.println("Connection interupted "+e);
             return null;
         }    

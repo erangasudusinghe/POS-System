@@ -38,7 +38,7 @@ public class ReportView extends JFrame
     }
     public ReportView(String fileName, HashMap para)
     {
-        super("WWW Soft Solutions  System (Report Viewer)");
+        super("My POS ");
 
         DBConnector db = new DBConnector();
         Connection con = db.DBCon();
@@ -55,7 +55,7 @@ public class ReportView extends JFrame
             JasperPrint print = JasperFillManager.fillReport(fileName, para, con);
             JRViewer viewer = new JRViewer(print);
             Container c = getContentPane();
-            c.add(viewer);            
+            c.add(viewer);           
         } 
         catch (JRException jRException)
         {
